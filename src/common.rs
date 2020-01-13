@@ -1,5 +1,3 @@
-use crate::vector::Vector3;
-
 pub trait Initializer {
     fn zeros() -> Self;
     fn ones() -> Self;
@@ -145,7 +143,7 @@ pub mod coordinates {
 
 pub mod transforms {
     use crate::common::Initializer;
-    use crate::vector::{Vector2, Vector3};
+    use crate::vector::Vector3;
 
     pub trait Translation<T> where
         Self: std::marker::Sized + Copy + Clone + Initializer {
