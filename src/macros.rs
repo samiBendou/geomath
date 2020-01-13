@@ -95,7 +95,7 @@ macro_rules! impl_vector {
             }
 
             #[inline]
-            fn normalize(&mut self) -> &mut Self {
+            fn set_normalized(&mut self) -> &mut Self {
                 let magnitude = self.magnitude();
                 $(self.$field /= magnitude;)+
                 self

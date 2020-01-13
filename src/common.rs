@@ -28,13 +28,19 @@ pub trait Split<T> {
     fn set_lower(&mut self, val: &T) -> &mut Self;
 }
 
-pub trait Metric {
+pub trait Metric where
+Self: Copy {
     fn dot(&self, other: &Self) -> f64;
     fn distance2(&self, other: &Self) -> f64;
     fn distance(&self, other: &Self) -> f64;
     fn magnitude2(&self) -> f64;
     fn magnitude(&self) -> f64;
-    fn normalize(&mut self) -> &mut Self;
+    fn set_normalized(&mut self) -> &mut Self;
+    fn normalized(&self) -> Self {
+        let mut ret = *self;
+        ret.set_normalized();
+        ret
+    }
 }
 
 pub trait Angle where

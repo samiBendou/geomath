@@ -218,8 +218,8 @@ impl<T> Metric for Point<T> where
         self.position.magnitude()
     }
 
-    fn normalize(&mut self) -> &mut Self {
-        self.position.normalize();
+    fn set_normalized(&mut self) -> &mut Self {
+        self.position.set_normalized();
         self
     }
 }

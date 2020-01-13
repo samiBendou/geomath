@@ -641,11 +641,11 @@ mod tests {
         }
 
         #[test]
-        fn normalize() {
+        fn normalized() {
             let mut u = Vector3::new(1., 1., 0.);
             let tol = 10. * std::f64::EPSILON;
             let inv_sqrt2 = std::f64::consts::FRAC_1_SQRT_2;
-            u.normalize();
+            u.normalized();
             assert_near!(u.magnitude2(), 1f64, tol);
             assert_near!(u.x, inv_sqrt2,  tol);
             assert_near!(u.y, inv_sqrt2,  tol);
