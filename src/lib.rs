@@ -1,7 +1,6 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
+pub mod vector;
+pub mod matrix;
+pub mod point;
+pub mod trajectory;
+pub mod common;
+pub mod macros;
