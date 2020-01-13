@@ -10,12 +10,12 @@ pub trait Reset<T> {
 }
 
 pub trait Array<T> {
-    fn array(&self) -> T;
+    fn to_array(&self) -> T;
     fn set_array(&mut self, arr: &T) -> &mut Self;
 }
 
 pub trait Vector<T> {
-    fn vector(&self) -> T;
+    fn to_vector(&self) -> T;
     fn set_vector(&mut self, arr: &T) -> &mut Self;
 }
 
@@ -35,12 +35,12 @@ Self: Copy {
     fn distance(&self, other: &Self) -> f64;
     fn magnitude2(&self) -> f64;
     fn magnitude(&self) -> f64;
-    fn set_normalized(&mut self) -> &mut Self;
     fn normalized(&self) -> Self {
         let mut ret = *self;
         ret.set_normalized();
         ret
     }
+    fn set_normalized(&mut self) -> &mut Self;
 }
 
 pub trait Angle where
@@ -143,7 +143,7 @@ pub mod coordinates {
 
     pub trait Homogeneous<T> {
         fn from_homogeneous(vector: &T) -> Self;
-        fn homogeneous(&self) -> T;
+        fn to_homogeneous(&self) -> T;
     }
 }
 

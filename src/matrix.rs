@@ -969,7 +969,7 @@ mod tests {
         fn translations() {
             let unit_x = Vector3::unit_x();
             let a = Matrix4::from_translation(&unit_x);
-            let u = unit_x.homogeneous();
+            let u = unit_x.to_homogeneous();
             let translated = a * u;
             assert_eq!(Vector3::from_homogeneous(&translated), (unit_x * 2.));
         }
@@ -980,7 +980,7 @@ mod tests {
             let unit_x = Vector3::unit_x();
             let rotation_z = Matrix3::from_rotation_z(angle);
             let a = Matrix4::from_rigid(&rotation_z, &unit_x);
-            let u = unit_x.homogeneous();
+            let u = unit_x.to_homogeneous();
             let moved = a * u;
             assert_eq!(Vector3::from_homogeneous(&moved), Vector3::new(1., 1., 0.));
         }
@@ -992,7 +992,7 @@ mod tests {
             let unit_x = Vector3::unit_x();
             let rotation_z = Matrix3::from_rotation_z(angle);
             let a = Matrix4::from_similarity(scale, &rotation_z, &unit_x);
-            let u = unit_x.homogeneous();
+            let u = unit_x.to_homogeneous();
             let moved = a * u;
             assert_near!(Vector3::from_homogeneous(&moved).distance2(&Vector3::new(1., 2., 0.)), 0.,  std::f64::EPSILON);
         }

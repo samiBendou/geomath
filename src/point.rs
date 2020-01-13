@@ -125,7 +125,7 @@ impl<T> Debug for Point<T> where
 
 impl Array<[f64; 4]> for Point2 {
     #[inline]
-    fn array(&self) -> [f64; 4] {
+    fn to_array(&self) -> [f64; 4] {
         [self.position.x, self.position.y, self.speed.x, self.speed.y]
     }
 
@@ -141,7 +141,7 @@ impl Array<[f64; 4]> for Point2 {
 
 impl Array<[f64; 6]> for Point3 {
     #[inline]
-    fn array(&self) -> [f64; 6] {
+    fn to_array(&self) -> [f64; 6] {
         [self.position.x, self.position.y, self.position.z, self.speed.x, self.speed.y, self.speed.z]
     }
 
@@ -159,7 +159,7 @@ impl Array<[f64; 6]> for Point3 {
 
 impl Vector<Vector4> for Point2 {
     #[inline]
-    fn vector(&self) -> Vector4 {
+    fn to_vector(&self) -> Vector4 {
         Vector4::concat(&self.position, &self.speed)
     }
 
@@ -175,7 +175,7 @@ impl Vector<Vector4> for Point2 {
 
 impl Vector<Vector6> for Point3 {
     #[inline]
-    fn vector(&self) -> Vector6 {
+    fn to_vector(&self) -> Vector6 {
         Vector6::concat(&self.position, &self.speed)
     }
 

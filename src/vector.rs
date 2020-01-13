@@ -392,7 +392,7 @@ impl coordinates::Homogeneous<Vector3> for Vector2 {
         Vector2::new(vector.x / vector.z, vector.y / vector.z)
     }
 
-    fn homogeneous(&self) -> Vector3 {
+    fn to_homogeneous(&self) -> Vector3 {
         Vector3::new(self.x, self.y, 1.)
     }
 }
@@ -402,7 +402,7 @@ impl coordinates::Homogeneous<Vector4> for Vector3 {
         Vector3::new(vector.x / vector.w, vector.y / vector.w, vector.z / vector.w)
     }
 
-    fn homogeneous(&self) -> Vector4 {
+    fn to_homogeneous(&self) -> Vector4 {
         Vector4::new(self.x, self.y, self.z, 1.)
     }
 }
@@ -465,7 +465,7 @@ impl transforms::Rotation3 for Vector3 {
 
 impl Array<[f64; 2]> for Vector2 {
     #[inline]
-    fn array(&self) -> [f64; 2] {
+    fn to_array(&self) -> [f64; 2] {
         [self.x, self.y]
     }
 
@@ -479,7 +479,7 @@ impl Array<[f64; 2]> for Vector2 {
 
 impl Array<[f64; 3]> for Vector3 {
     #[inline]
-    fn array(&self) -> [f64; 3] {
+    fn to_array(&self) -> [f64; 3] {
         [self.x, self.y, self.z]
     }
 
@@ -494,7 +494,7 @@ impl Array<[f64; 3]> for Vector3 {
 
 impl Array<[f64; 4]> for Vector4 {
     #[inline]
-    fn array(&self) -> [f64; 4] {
+    fn to_array(&self) -> [f64; 4] {
         [self.x, self.y, self.z, self.w]
     }
 
@@ -510,7 +510,7 @@ impl Array<[f64; 4]> for Vector4 {
 
 impl Array<[f64; 6]> for Vector6 {
     #[inline]
-    fn array(&self) -> [f64; 6] {
+    fn to_array(&self) -> [f64; 6] {
         [self.x, self.y, self.z, self.u, self.v, self.w]
     }
 
