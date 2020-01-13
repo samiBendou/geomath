@@ -642,7 +642,7 @@ mod tests {
 
         #[test]
         fn normalized() {
-            let mut u = Vector3::new(1., 1., 0.);
+            let u = Vector3::new(1., 1., 0.);
             let tol = 10. * std::f64::EPSILON;
             let inv_sqrt2 = std::f64::consts::FRAC_1_SQRT_2;
             u.normalized();
