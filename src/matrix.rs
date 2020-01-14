@@ -13,7 +13,7 @@ use std::ops::{
 use crate::common::*;
 use crate::common::transforms;
 use crate::vector::*;
-use crate::impl_vector;
+use crate::{impl_vector, impl_debug_matrix};
 
 pub trait Rows<T> where
     Self: Initializer + std::marker::Sized {
@@ -90,21 +90,6 @@ pub struct Matrix4 {
     pub wy: f64,
     pub wz: f64,
     pub ww: f64,
-}
-
-macro_rules! impl_debug_matrix {
-($MatrixN:ident) => {
-        impl Debug for $MatrixN {
-            fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error> {
-                let rows = self.rows();
-                let mut buffer = String::from("");
-                for row in rows.iter() {
-                    buffer += &format!("\n{:?}", row);
-                }
-                write!(f, "{}", buffer)
-            }
-        }
-    }
 }
 
 impl_vector!(Matrix2 {xx, xy, yx, yy}, 4);

@@ -267,3 +267,19 @@ macro_rules! impl_debug_vector {
         }
     }
 }
+
+#[macro_export]
+macro_rules! impl_debug_matrix {
+($MatrixN:ident) => {
+        impl Debug for $MatrixN {
+            fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error> {
+                let rows = self.rows();
+                let mut buffer = String::from("");
+                for row in rows.iter() {
+                    buffer += &format!("\n{:?}", row);
+                }
+                write!(f, "{}", buffer)
+            }
+        }
+    }
+}
