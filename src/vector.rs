@@ -112,6 +112,15 @@ impl MulAssign<Matrix3> for Vector3 {
     }
 }
 
+impl MulAssign<Matrix3> for Vector2 {
+    fn mul_assign(&mut self, rhs: Matrix3) {
+        let x = self.x;
+        let y = self.y;
+        self.x = rhs.xx * x + rhs.xy * y + rhs.xz;
+        self.y = rhs.yx * x + rhs.yy * y + rhs.yz;
+    }
+}
+
 impl MulAssign<Matrix4> for Vector4 {
     fn mul_assign(&mut self, rhs: Matrix4) {
         let x = self.x;
@@ -122,6 +131,17 @@ impl MulAssign<Matrix4> for Vector4 {
         self.y = rhs.yx * x + rhs.yy * y + rhs.yz * z + rhs.yw * w;
         self.z = rhs.zx * x + rhs.zy * y + rhs.zz * z + rhs.zw * w;
         self.w = rhs.wx * x + rhs.wy * y + rhs.wz * z + rhs.ww * w;
+    }
+}
+
+impl MulAssign<Matrix4> for Vector3 {
+    fn mul_assign(&mut self, rhs: Matrix4) {
+        let x = self.x;
+        let y = self.y;
+        let z = self.z;
+        self.x = rhs.xx * x + rhs.xy * y + rhs.xz * z + rhs.xw;
+        self.y = rhs.yx * x + rhs.yy * y + rhs.yz * z + rhs.yw;
+        self.z = rhs.zx * x + rhs.zy * y + rhs.zz * z + rhs.zw;
     }
 }
 

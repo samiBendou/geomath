@@ -246,6 +246,16 @@ impl Mul<Vector3> for Matrix3 {
     }
 }
 
+impl Mul<Vector2> for Matrix3 {
+    type Output = Vector2;
+
+    fn mul(self, rhs: Vector2) -> Self::Output {
+        let mut ret = rhs;
+        ret *= self;
+        ret
+    }
+}
+
 impl MulAssign<Matrix3> for Matrix3 {
     fn mul_assign(&mut self, rhs: Matrix3) {
         let xx = self.xx;
@@ -286,6 +296,16 @@ impl Mul<Vector4> for Matrix4 {
     type Output = Vector4;
 
     fn mul(self, rhs: Vector4) -> Self::Output {
+        let mut ret = rhs;
+        ret *= self;
+        ret
+    }
+}
+
+impl Mul<Vector3> for Matrix4 {
+    type Output = Vector3;
+
+    fn mul(self, rhs: Vector3) -> Self::Output {
         let mut ret = rhs;
         ret *= self;
         ret
