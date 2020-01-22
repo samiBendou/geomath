@@ -107,9 +107,9 @@ pub struct Matrix4 {
     pub ww: f64,
 }
 
-impl_vector!(Matrix2 {xx, xy, yx, yy}, 4);
-impl_vector!(Matrix3 {xx, xy, xz, yx, yy, yz, zx, zy, zz}, 9);
-impl_vector!(Matrix4 {xx, xy, xz, xw, yx, yy, yz, yw, zx, zy, zz, zw, wx, wy, wz, ww}, 16);
+impl_vector!(Matrix2 {xx, xy, yx, yy}, 4, mat2);
+impl_vector!(Matrix3 {xx, xy, xz, yx, yy, yz, zx, zy, zz}, 9, mat3);
+impl_vector!(Matrix4 {xx, xy, xz, xw, yx, yy, yz, yw, zx, zy, zz, zw, wx, wy, wz, ww}, 16, mat4);
 
 impl_debug_matrix!(Matrix2);
 impl_debug_matrix!(Matrix3);
@@ -118,8 +118,8 @@ impl_debug_matrix!(Matrix4);
 impl Rows<[Vector2; 2]> for Matrix2 {
     fn rows(&self) -> [Vector2; 2] {
         [
-            Vector2::new(self.xx, self.xy),
-            Vector2::new(self.yx, self.yy)
+            vec2(self.xx, self.xy),
+            vec2(self.yx, self.yy)
         ]
     }
 
@@ -136,9 +136,9 @@ impl Rows<[Vector2; 2]> for Matrix2 {
 impl Rows<[Vector3; 3]> for Matrix3 {
     fn rows(&self) -> [Vector3; 3] {
         [
-            Vector3::new(self.xx, self.xy, self.xz),
-            Vector3::new(self.yx, self.yy, self.yz),
-            Vector3::new(self.zx, self.zy, self.zz),
+            vec3(self.xx, self.xy, self.xz),
+            vec3(self.yx, self.yy, self.yz),
+            vec3(self.zx, self.zy, self.zz),
         ]
     }
 
@@ -161,10 +161,10 @@ impl Rows<[Vector3; 3]> for Matrix3 {
 impl Rows<[Vector4; 4]> for Matrix4 {
     fn rows(&self) -> [Vector4; 4] {
         [
-            Vector4::new(self.xx, self.xy, self.xz, self.xw),
-            Vector4::new(self.yx, self.yy, self.yz, self.yw),
-            Vector4::new(self.zx, self.zy, self.zz, self.zw),
-            Vector4::new(self.wx, self.wy, self.wz, self.ww),
+            vec4(self.xx, self.xy, self.xz, self.xw),
+            vec4(self.yx, self.yy, self.yz, self.yw),
+            vec4(self.zx, self.zy, self.zz, self.zw),
+            vec4(self.wx, self.wy, self.wz, self.ww),
         ]
     }
 
@@ -870,11 +870,8 @@ impl transforms::Rotation3 for Matrix3 {
 mod tests {
     mod matrix3 {
         use crate::common::transforms::Rotation3;
-        use crate::vector;
-        use crate::matrix;
-
-        use super::super::Algebra;
-        use super::super::Matrix3;
+        use crate::vector::{self};
+        use crate::matrix::{self, *};
 
         #[test]
         fn arithmetic() {
@@ -892,8 +889,8 @@ mod tests {
 
         #[test]
         fn transposed() {
-            let a = Matrix3::new(1., 2., 3., 4., 5., 6., 7., 8., 9.);
-            assert_eq!(a.transposed(), Matrix3::new(1., 4., 7., 2., 5., 8., 3., 6., 9.));
+            let a = mat3(1., 2., 3., 4., 5., 6., 7., 8., 9.);
+            assert_eq!(a.transposed(), mat3(1., 4., 7., 2., 5., 8., 3., 6., 9.));
         }
 
         #[test]
@@ -934,13 +931,8 @@ mod tests {
         use crate::common::*;
         use crate::common::coordinates::Homogeneous;
         use crate::common::transforms::{Rigid, Rotation3, Similarity, Translation};
-        use crate::matrix::Matrix3;
-        use crate::vector::Vector3;
-        use crate::vector;
-        use crate::matrix;
-
-        use super::super::Algebra;
-        use super::super::Matrix4;
+        use crate::matrix::{self, *};
+        use crate::vector::{self, *};
 
         #[test]
         fn arithmetic() {
@@ -958,8 +950,8 @@ mod tests {
 
         #[test]
         fn transposed() {
-            let a = Matrix4::new(1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16.);
-            assert_eq!(a.transposed(), Matrix4::new(1., 5., 9., 13., 2., 6., 10., 14., 3., 7., 11., 15., 4., 8., 12., 16.));
+            let a = mat4(1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16.);
+            assert_eq!(a.transposed(), mat4(1., 5., 9., 13., 2., 6., 10., 14., 3., 7., 11., 15., 4., 8., 12., 16.));
         }
 
         #[test]
@@ -991,7 +983,7 @@ mod tests {
             let a = Matrix4::from_rigid(&rotation_z, &unit_x);
             let u = unit_x.to_homogeneous();
             let moved = a * u;
-            assert_eq!(Vector3::from_homogeneous(&moved), Vector3::new(1., 1., 0.));
+            assert_eq!(Vector3::from_homogeneous(&moved), vec3(1., 1., 0.));
         }
 
         #[test]
@@ -1003,7 +995,7 @@ mod tests {
             let a = Matrix4::from_similarity(scale, &rotation_z, &unit_x);
             let u = unit_x.to_homogeneous();
             let moved = a * u;
-            assert_near!(Vector3::from_homogeneous(&moved).distance2(&Vector3::new(1., 2., 0.)), 0.,  std::f64::EPSILON);
+            assert_near!(Vector3::from_homogeneous(&moved).distance2(&vec3(1., 2., 0.)), 0.,  std::f64::EPSILON);
         }
     }
 }

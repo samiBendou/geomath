@@ -11,7 +11,7 @@ macro_rules! assert_near {
 
 #[macro_export]
 macro_rules! impl_vector {
-    ($VectorN:ident { $($field:ident),+ }, $n: expr) => {
+    ($VectorN:ident { $($field:ident),+ }, $n: expr, $label: ident) => {
         impl From<f64> for $VectorN {
             fn from(s: f64) -> Self {
                 $VectorN { $($field: s),+ }
@@ -20,7 +20,7 @@ macro_rules! impl_vector {
 
         impl $VectorN {
             #[inline]
-            pub fn new($($field: f64),+) -> Self {
+            pub const fn new($($field: f64),+) -> Self {
                 $VectorN { $($field: $field),+ }
             }
         }
@@ -246,6 +246,11 @@ macro_rules! impl_vector {
                 $(self.$field = self.$field * t0 + other1.$field * t1 + other2.$field * t2 + other.$field * t3;)+
                 self
             }
+        }
+
+        #[inline]
+        pub const fn $label($($field: f64),+) -> $VectorN {
+            $VectorN::new($($field),+)
         }
     }
 }

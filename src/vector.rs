@@ -79,38 +79,38 @@ pub struct Vector6 {
 
 impl From<[f64; 2]> for Vector2 {
     fn from(array: [f64; 2]) -> Self {
-        Vector2::new(array[0], array[1])
+        vec2(array[0], array[1])
     }
 }
 
 impl From<[f64; 3]> for Vector3 {
     fn from(array: [f64; 3]) -> Self {
-        Vector3::new(array[0], array[1], array[2])
+        vec3(array[0], array[1], array[2])
     }
 }
 
 impl From<[f64; 4]> for Vector4 {
     fn from(array: [f64; 4]) -> Self {
-        Vector4::new(array[0], array[1], array[2], array[3])
+        vec4(array[0], array[1], array[2], array[3])
     }
 }
 
 impl From<[f64; 6]> for Vector6 {
     fn from(array: [f64; 6]) -> Self {
-        Vector6::new(array[0], array[1], array[2], array[3], array[4], array[5])
+        vec6(array[0], array[1], array[2], array[3], array[4], array[5])
     }
 }
 
 impl From<Point2> for Vector4 {
     fn from(point: Point2) -> Self {
-        Vector4::new(point.position.x, point.position.y, point.speed.x, point.speed.y)
+        vec4(point.position.x, point.position.y, point.speed.x, point.speed.y)
     }
 }
 
-impl_vector!(Vector2 {x, y}, 2);
-impl_vector!(Vector3 {x, y, z}, 3);
-impl_vector!(Vector4 {x, y, z, w}, 4);
-impl_vector!(Vector6 {x, y, z, u, v, w}, 6);
+impl_vector!(Vector2 {x, y}, 2, vec2);
+impl_vector!(Vector3 {x, y, z}, 3, vec3);
+impl_vector!(Vector4 {x, y, z, w}, 4, vec4);
+impl_vector!(Vector6 {x, y, z, u, v, w}, 6, vec6);
 
 impl_debug_vector!(Vector2 {x, y});
 impl_debug_vector!(Vector3 {x, y, z});
@@ -350,21 +350,21 @@ impl coordinates::Spherical for Vector3 {
 
 impl coordinates::Homogeneous<Vector3> for Vector2 {
     fn from_homogeneous(vector: &Vector3) -> Self {
-        Vector2::new(vector.x / vector.z, vector.y / vector.z)
+        vec2(vector.x / vector.z, vector.y / vector.z)
     }
 
     fn to_homogeneous(&self) -> Vector3 {
-        Vector3::new(self.x, self.y, 1.)
+        vec3(self.x, self.y, 1.)
     }
 }
 
 impl coordinates::Homogeneous<Vector4> for Vector3 {
     fn from_homogeneous(vector: &Vector4) -> Self {
-        Vector3::new(vector.x / vector.w, vector.y / vector.w, vector.z / vector.w)
+        vec3(vector.x / vector.w, vector.y / vector.w, vector.z / vector.w)
     }
 
     fn to_homogeneous(&self) -> Vector4 {
-        Vector4::new(self.x, self.y, self.z, 1.)
+        vec4(self.x, self.y, self.z, 1.)
     }
 }
 
@@ -493,17 +493,17 @@ impl Split<Vector2> for Vector4 {
     }
 
     fn concat(lhs: &Vector2, rhs: &Vector2) -> Self {
-        Vector4::new(lhs.x, lhs.y, rhs.x, rhs.y)
+        vec4(lhs.x, lhs.y, rhs.x, rhs.y)
     }
 
     #[inline]
     fn upper(&self) -> Vector2 {
-        Vector2::new(self.x, self.y)
+        vec2(self.x, self.y)
     }
 
     #[inline]
     fn lower(&self) -> Vector2 {
-        Vector2::new(self.z, self.w)
+        vec2(self.z, self.w)
     }
 
     #[inline]
@@ -527,17 +527,17 @@ impl Split<Vector3> for Vector6 {
     }
 
     fn concat(lhs: &Vector3, rhs: &Vector3) -> Self {
-        Vector6::new(lhs.x, lhs.y, lhs.z, rhs.x, rhs.y, rhs.z)
+        vec6(lhs.x, lhs.y, lhs.z, rhs.x, rhs.y, rhs.z)
     }
 
     #[inline]
     fn upper(&self) -> Vector3 {
-        Vector3::new(self.x, self.y, self.z)
+        vec3(self.x, self.y, self.z)
     }
 
     #[inline]
     fn lower(&self) -> Vector3 {
-        Vector3::new(self.u, self.v, self.w)
+        vec3(self.u, self.v, self.w)
     }
 
     #[inline]
@@ -565,11 +565,11 @@ mod tests {
         use crate::common::transforms::Rotation3;
         use crate::vector;
         use crate::common::coordinates::*;
-        use crate::vector::Vector3;
+        use crate::vector::vec3;
 
         #[test]
         fn new() {
-            let u = Vector3::new(1., 2., 3.);
+            let u = vec3(1., 2., 3.);
             assert_eq!(u.x, 1.);
             assert_eq!(u.y, 2.);
             assert_eq!(u.z, 3.);
@@ -579,7 +579,7 @@ mod tests {
         fn magnitude() {
             let sqrt_2 = std::f64::consts::SQRT_2;
             let zero = vector::consts::ZEROS_3;
-            let u = Vector3::new(1., 1., 0.);
+            let u = vec3(1., 1., 0.);
             assert_eq!(u.magnitude2(), 2.);
             assert_eq!(u.magnitude(), sqrt_2);
             assert_eq!(u.distance2(&zero), 2.);
@@ -588,22 +588,22 @@ mod tests {
 
         #[test]
         fn partial_eq() {
-            let u = Vector3::new(-4., 0., 1.);
-            let v = Vector3::new(-2., 0., 1.);
+            let u = vec3(-4., 0., 1.);
+            let v = vec3(-2., 0., 1.);
             assert_eq!(u, u);
             assert_ne!(u, v);
         }
 
         #[test]
         fn polar_coordinates() {
-            let u = Vector3::ones();
+            let u = vector::consts::ONES_3;
             assert_eq!(u.rho(), std::f64::consts::SQRT_2);
             assert_eq!(u.phi(), std::f64::consts::FRAC_PI_4);
         }
 
         #[test]
         fn normalized() {
-            let mut u = Vector3::new(1., 1., 0.);
+            let mut u = vec3(1., 1., 0.);
             let tol = 10. * std::f64::EPSILON;
             let inv_sqrt2 = std::f64::consts::FRAC_1_SQRT_2;
             u.set_normalized();
@@ -615,30 +615,30 @@ mod tests {
 
         #[test]
         fn fmt() {
-            let u = Vector3::new(1., 2., 3.);
+            let u = vec3(1., 2., 3.);
             let formatted = format!("{:?}", u);
             assert_eq!(formatted.as_str(), "( 1.000  2.000  3.000 )");
         }
 
         #[test]
         fn distance() {
-            let u = Vector3::new(1., 1., 0.);
+            let u = vec3(1., 1., 0.);
             let v = vector::consts::ZEROS_3;
             assert_eq!(u.distance2(&v), 2f64);
         }
 
         #[test]
         fn arithmetic() {
-            let mut u = Vector3::new(-4., 1., 1.);
-            let v = Vector3::new(3., 2., -1.);
+            let mut u = vec3(-4., 1., 1.);
+            let v = vec3(3., 2., -1.);
 
-            assert_eq!(u + v, Vector3::new(-1., 3., 0.));
-            assert_eq!(u - v, Vector3::new(-7., -1., 2.));
-            assert_eq!(u * 2., Vector3::new(-8., 2., 2.));
-            assert_eq!(u / 4., Vector3::new(-1., 0.25, 0.25));
+            assert_eq!(u + v, vec3(-1., 3., 0.));
+            assert_eq!(u - v, vec3(-7., -1., 2.));
+            assert_eq!(u * 2., vec3(-8., 2., 2.));
+            assert_eq!(u / 4., vec3(-1., 0.25, 0.25));
 
             u += v;
-            assert_eq!(u, Vector3::new(-1., 3., 0.));
+            assert_eq!(u, vec3(-1., 3., 0.));
         }
 
         #[test]
