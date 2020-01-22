@@ -15,11 +15,36 @@ use crate::matrix::{Matrix2, Matrix3, Matrix4};
 use crate::point::Point2;
 use crate::{impl_vector, impl_debug_vector};
 
-pub static EX: Vector2 = Vector2 { x: 1., y: 0. };
-pub static N_EX: Vector2 = Vector2 { x: -1., y: 0. };
-pub static EY: Vector2 = Vector2 { x: 0., y: 1. };
-pub static N_EY: Vector2 = Vector2 { x: 0., y: -1. };
-pub static ZERO: Vector2 = Vector2 { x: 0., y: 0. };
+pub mod consts {
+    use super::*;
+
+    pub const EX_2: Vector2 = Vector2 { x: 1., y: 0. };
+    pub const N_EX_2: Vector2 = Vector2 { x: -1., y: 0. };
+    pub const EY_2: Vector2 = Vector2 { x: 0., y: 1. };
+    pub const N_EY_2: Vector2 = Vector2 { x: 0., y: -1. };
+    pub const ZEROS_2: Vector2 = Vector2 { x: 0., y: 0. };
+    pub const ONES_2: Vector2 = Vector2 { x: 1., y: 1. };
+
+    pub const EX_3: Vector3 = Vector3 { x: 1., y: 0., z: 0. };
+    pub const N_EX_3: Vector3 = Vector3 { x: -1., y: 0., z: 0. };
+    pub const EY_3: Vector3 = Vector3 { x: 0., y: 1., z: 0. };
+    pub const N_EY_3: Vector3 = Vector3 { x: 0., y: -1., z: 0. };
+    pub const EZ_3: Vector3 = Vector3 { x: 0., y: 0., z: 1. };
+    pub const N_EZ_3: Vector3 = Vector3 { x: 0., y: 0., z: -1. };
+    pub const ZEROS_3: Vector3 = Vector3 { x: 0., y: 0., z: 0. };
+    pub const ONES_3: Vector3 = Vector3 { x: 1., y: 1., z: 1. };
+
+    pub const EX_4: Vector4 = Vector4 { x: 1., y: 0., z: 0., w: 0. };
+    pub const N_EX_4: Vector4 = Vector4 { x: -1., y: 0., z: 0., w: 0. };
+    pub const EY_4: Vector4 = Vector4 { x: 0., y: 1., z: 0., w: 0. };
+    pub const N_EY_4: Vector4 = Vector4 { x: 0., y: -1., z: 0., w: 0. };
+    pub const EZ_4: Vector4 = Vector4 { x: 0., y: 0., z: 1., w: 0. };
+    pub const N_EZ_4: Vector4 = Vector4 { x: 0., y: 0., z: -1., w: 0. };
+    pub const EW_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: 1. };
+    pub const N_EW_4: Vector4 = Vector4 { x: 0., y: 0., z: -0., w: -1. };
+    pub const ZEROS_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: 0. };
+    pub const ONES_4: Vector4 = Vector4 { x: 1., y: 1., z: 1., w: 1. };
+}
 
 #[derive(Copy, Clone)]
 pub struct Vector2 {
@@ -166,90 +191,6 @@ impl Cross for Vector3 {
         self.y = z * rhs.x - x * rhs.z;
         self.z = x * rhs.y - y * rhs.x;
         self
-    }
-}
-
-impl coordinates::Cartesian2 for Vector2 {
-    fn unit_x() -> Self {
-        Vector2 { x: 1., y: 0. }
-    }
-
-    fn unit_neg_x() -> Self {
-        Vector2 { x: -1., y: 0. }
-    }
-
-    fn unit_y() -> Self {
-        Vector2 { x: 0., y: 1. }
-    }
-
-    fn unit_neg_y() -> Self {
-        Vector2 { x: 0., y: -1. }
-    }
-}
-
-impl coordinates::Cartesian2 for Vector3 {
-    fn unit_x() -> Self {
-        Vector3 { x: 1., y: 0., z: 0. }
-    }
-
-    fn unit_neg_x() -> Self {
-        Vector3 { x: -1., y: 0., z: 0. }
-    }
-
-    fn unit_y() -> Self {
-        Vector3 { x: 0., y: 1., z: 0. }
-    }
-
-    fn unit_neg_y() -> Self {
-        Vector3 { x: 0., y: -1., z: 0. }
-    }
-}
-
-impl coordinates::Cartesian3 for Vector3 {
-    fn unit_z() -> Self {
-        Vector3 { x: 0., y: 0., z: 1. }
-    }
-
-    fn unit_neg_z() -> Self {
-        Vector3 { x: 0., y: 0., z: -1. }
-    }
-}
-
-impl coordinates::Cartesian2 for Vector4 {
-    fn unit_x() -> Self {
-        Vector4 { x: 1., y: 0., z: 0., w: 0. }
-    }
-
-    fn unit_neg_x() -> Self {
-        Vector4 { x: -1., y: 0., z: 0., w: 0. }
-    }
-
-    fn unit_y() -> Self {
-        Vector4 { x: 0., y: 1., z: 0., w: 0. }
-    }
-
-    fn unit_neg_y() -> Self {
-        Vector4 { x: 0., y: -1., z: 0., w: 0. }
-    }
-}
-
-impl coordinates::Cartesian3 for Vector4 {
-    fn unit_z() -> Self {
-        Vector4 { x: 0., y: 0., z: 1., w: 0. }
-    }
-
-    fn unit_neg_z() -> Self {
-        Vector4 { x: 0., y: 0., z: -1., w: 0. }
-    }
-}
-
-impl coordinates::Cartesian4 for Vector4 {
-    fn unit_w() -> Self {
-        Vector4 { x: 0., y: 0., z: 0., w: 1. }
-    }
-
-    fn unit_neg_w() -> Self {
-        Vector4 { x: 0., y: 0., z: 0., w: -1. }
     }
 }
 
@@ -622,9 +563,9 @@ mod tests {
         use crate::assert_near;
         use crate::common::*;
         use crate::common::transforms::Rotation3;
-
-        use super::super::coordinates::*;
-        use super::super::Vector3;
+        use crate::vector;
+        use crate::common::coordinates::*;
+        use crate::vector::Vector3;
 
         #[test]
         fn new() {
@@ -637,7 +578,7 @@ mod tests {
         #[test]
         fn magnitude() {
             let sqrt_2 = std::f64::consts::SQRT_2;
-            let zero = Vector3::zeros();
+            let zero = vector::consts::ZEROS_3;
             let u = Vector3::new(1., 1., 0.);
             assert_eq!(u.magnitude2(), 2.);
             assert_eq!(u.magnitude(), sqrt_2);
@@ -662,10 +603,10 @@ mod tests {
 
         #[test]
         fn normalized() {
-            let u = Vector3::new(1., 1., 0.);
+            let mut u = Vector3::new(1., 1., 0.);
             let tol = 10. * std::f64::EPSILON;
             let inv_sqrt2 = std::f64::consts::FRAC_1_SQRT_2;
-            u.normalized();
+            u.set_normalized();
             assert_near!(u.magnitude2(), 1f64, tol);
             assert_near!(u.x, inv_sqrt2,  tol);
             assert_near!(u.y, inv_sqrt2,  tol);
@@ -682,7 +623,7 @@ mod tests {
         #[test]
         fn distance() {
             let u = Vector3::new(1., 1., 0.);
-            let v = Vector3::zeros();
+            let v = vector::consts::ZEROS_3;
             assert_eq!(u.distance2(&v), 2f64);
         }
 
@@ -703,7 +644,7 @@ mod tests {
         #[test]
         fn angles() {
             let angle = std::f64::consts::FRAC_PI_4;
-            let u = Vector3::unit_x();
+            let u = vector::consts::EX_3;
             let mut v = u;
 
             assert_eq!(u.angle(&v), 0.);
@@ -711,9 +652,9 @@ mod tests {
             assert_near!(u.angle(&v), angle, std::f64::EPSILON);
             assert_near!(v.angle(&u), angle, std::f64::EPSILON);
             v.set_rotation_z(angle);
-            assert_eq!(u.angle(&v), 2. * angle);
+            assert_near!(u.angle(&v), 2. * angle, 10. * std::f64::EPSILON);
             v.set_rotation_z(angle);
-            assert_eq!(u.angle(&v), 3. * angle);
+            assert_near!(u.angle(&v), 3. * angle, 10. * std::f64::EPSILON);
             v.set_rotation_z(angle);
             assert_eq!(u.angle(&v), 4. * angle);
         }
@@ -721,38 +662,38 @@ mod tests {
         #[test]
         fn rotations_xyz() {
             let angle = std::f64::consts::FRAC_PI_2;
-            let mut u = Vector3::unit_x();
-            let mut v = Vector3::unit_y();
-            let mut w = Vector3::unit_z();
+            let mut u = vector::consts::EX_3;
+            let mut v = vector::consts::EY_3;
+            let mut w = vector::consts::EZ_3;
 
             u.set_rotation_z(angle);
-            assert_near!(u.distance2(&Vector3::unit_y()), 0., std::f64::EPSILON);
+            assert_near!(u.distance2(&vector::consts::EY_3), 0., std::f64::EPSILON);
 
             v.set_rotation_x(angle);
-            assert_near!(v.distance2(&Vector3::unit_z()), 0., std::f64::EPSILON);
+            assert_near!(v.distance2(&vector::consts::EZ_3), 0., std::f64::EPSILON);
 
             w.set_rotation_y(angle);
-            assert_near!(w.distance2(&Vector3::unit_x()), 0., std::f64::EPSILON);
+            assert_near!(w.distance2(&vector::consts::EX_3), 0., std::f64::EPSILON);
         }
 
         #[test]
         fn rotations() {
             let angle = std::f64::consts::FRAC_PI_2;
-            let mut u = Vector3::unit_x();
-            let mut v = Vector3::unit_y();
-            let mut w = Vector3::unit_z();
+            let mut u = vector::consts::EX_3;
+            let mut v = vector::consts::EY_3;
+            let mut w = vector::consts::EZ_3;
 
-            let mut axis = Vector3::unit_z();
+            let mut axis = vector::consts::EZ_3;
             u.set_rotation(angle, &axis);
-            assert_near!(u.distance2(&Vector3::unit_y()), 0., std::f64::EPSILON);
+            assert_near!(u.distance2(&vector::consts::EY_3), 0., std::f64::EPSILON);
 
-            axis = Vector3::unit_x();
+            axis = vector::consts::EX_3;
             v.set_rotation(angle, &axis);
-            assert_near!(v.distance2(&Vector3::unit_z()), 0., std::f64::EPSILON);
+            assert_near!(v.distance2(&vector::consts::EZ_3), 0., std::f64::EPSILON);
 
-            axis = Vector3::unit_y();
+            axis = vector::consts::EY_3;
             w.set_rotation(angle, &axis);
-            assert_near!(w.distance2(&Vector3::unit_x()), 0., std::f64::EPSILON);
+            assert_near!(w.distance2(&vector::consts::EX_3), 0., std::f64::EPSILON);
         }
     }
 }

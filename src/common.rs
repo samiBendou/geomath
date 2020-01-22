@@ -99,23 +99,6 @@ pub trait Interpolation {
 
 
 pub mod coordinates {
-    pub trait Cartesian2 {
-        fn unit_x() -> Self;
-        fn unit_neg_x() -> Self;
-        fn unit_y() -> Self;
-        fn unit_neg_y() -> Self;
-    }
-
-    pub trait Cartesian3 {
-        fn unit_z() -> Self;
-        fn unit_neg_z() -> Self;
-    }
-
-    pub trait Cartesian4 {
-        fn unit_w() -> Self;
-        fn unit_neg_w() -> Self;
-    }
-
     pub trait Polar {
         fn from_polar(rho: f64, phi: f64) -> Self;
         fn set_polar(&mut self, rho: f64, phi: f64) -> &mut Self;

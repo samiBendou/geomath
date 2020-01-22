@@ -4,16 +4,31 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, 
 
 use crate::common::{Initializer, Reset};
 use crate::vector::{Vector2, Vector3, Vector4};
+use crate::trajectory::consts::*;
 
 pub type Trajectory2 = Trajectory<Vector2>;
 pub type Trajectory3 = Trajectory<Vector3>;
 pub type Trajectory4 = Trajectory<Vector4>;
 
-pub const TRAJECTORY_SIZE: usize = 256;
-pub const ZERO: Trajectory3 = Trajectory3 {
-    positions: [Vector3 { x: 0., y: 0., z: 0. }; TRAJECTORY_SIZE],
-    index: 0,
-};
+pub mod consts {
+    use super::*;
+    use crate::vector;
+
+    pub const TRAJECTORY_SIZE: usize = 256;
+
+    pub const ZEROS_2: Trajectory2 = Trajectory2 {
+        positions: [vector::consts::ZEROS_2; TRAJECTORY_SIZE],
+        index: 0,
+    };
+    pub const ZEROS_3: Trajectory3 = Trajectory3 {
+        positions: [vector::consts::ZEROS_3; TRAJECTORY_SIZE],
+        index: 0,
+    };
+    pub const ZEROS_4: Trajectory4 = Trajectory4 {
+        positions: [vector::consts::ZEROS_4; TRAJECTORY_SIZE],
+        index: 0,
+    };
+}
 
 #[derive(Copy, Clone)]
 pub struct Trajectory<T> {

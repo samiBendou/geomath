@@ -16,7 +16,7 @@ use crate::vector::*;
 use crate::{impl_vector, impl_debug_matrix};
 
 pub trait Rows<T> where
-    Self: Initializer + std::marker::Sized {
+    Self: std::marker::Sized + Initializer {
     fn from_rows(rows: &T) -> Self {
         let mut ret = Self::zeros();
         ret.set_rows(rows);
@@ -29,7 +29,6 @@ pub trait Rows<T> where
 pub trait Algebra<T> where
     Self: std::marker::Sized + Copy + Clone,
     T: std::marker::Sized + Copy + Clone {
-    fn eye() -> Self;
     fn determinant(&self) -> f64;
     fn inverse(&self) -> Self {
         let mut ret = *self;
@@ -49,6 +48,22 @@ pub trait Algebra<T> where
     fn set_inverse(&mut self) -> &mut Self;
     fn set_transposed(&mut self) -> &mut Self;
     fn set_adjugate(&mut self) -> &mut Self;
+}
+
+pub mod consts {
+    use super::*;
+
+    pub const ZEROS_2: Matrix2 = Matrix2 {xx: 0., xy: 0., yx: 0., yy: 0.};
+    pub const ONES_2: Matrix2 = Matrix2 {xx: 1., xy: 1., yx: 1., yy: 1.};
+    pub const EYE_2: Matrix2 = Matrix2 {xx: 1., xy: 0., yx: 0., yy: 1.};
+
+    pub const ZEROS_3: Matrix3 = Matrix3 {xx: 0., xy: 0., xz: 0., yx: 0., yy: 0., yz: 0., zx: 0., zy: 0., zz: 0.};
+    pub const ONES_3: Matrix3 = Matrix3 {xx: 1., xy: 1., xz: 1., yx: 1., yy: 1., yz: 0., zx: 1., zy: 1., zz: 1.};
+    pub const EYE_3: Matrix3 = Matrix3 {xx: 1., xy: 0., xz: 0., yx: 0., yy: 1., yz: 0., zx: 0., zy: 0., zz: 1.};
+
+    pub const ZEROS_4: Matrix4 = Matrix4 {xx: 0., xy: 0., xz: 0., xw: 0., yx: 0., yy: 0., yz: 0., yw: 0., zx: 0., zy: 0., zz: 0., zw: 0., wx: 0., wy: 0., wz: 0., ww: 0.};
+    pub const ONES_4: Matrix4 = Matrix4 {xx: 1., xy: 1., xz: 1., xw: 1., yx: 1., yy: 1., yz: 1., yw: 1., zx: 1., zy: 1., zz: 1., zw: 1., wx: 1., wy: 1., wz: 1., ww: 1.};
+    pub const EYE_4: Matrix4 = Matrix4 {xx: 1., xy: 0., xz: 0., xw: 0., yx: 0., yy: 1., yz: 0., yw: 0., zx: 0., zy: 0., zz: 1., zw: 0., wx: 0., wy: 0., wz: 0., ww: 1.};
 }
 
 #[derive(Copy, Clone)]
@@ -339,10 +354,6 @@ impl MulAssign<Matrix4> for Matrix4 {
 }
 
 impl Algebra<Matrix2> for Matrix2 {
-    fn eye() -> Self {
-        Matrix2::new(1., 0., 0., 1.)
-    }
-
     fn determinant(&self) -> f64 {
         let xx = self.xx;
         let yx = self.yx;
@@ -396,10 +407,6 @@ impl Algebra<Matrix2> for Matrix2 {
 }
 
 impl Algebra<Matrix3> for Matrix3 {
-    fn eye() -> Self {
-        Matrix3::new(1., 0., 0., 0., 1., 0., 0., 0., 1.)
-    }
-
     fn determinant(&self) -> f64 {
         let xx = self.xx;
         let yx = self.yx;
@@ -493,10 +500,6 @@ impl Algebra<Matrix3> for Matrix3 {
 }
 
 impl Algebra<Matrix4> for Matrix4 {
-    fn eye() -> Self {
-        Matrix4::new(1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1.)
-    }
-
     fn determinant(&self) -> f64 {
         let xx = self.xx;
         let yx = self.yx;
@@ -866,25 +869,24 @@ impl transforms::Rotation3 for Matrix3 {
 #[cfg(test)]
 mod tests {
     mod matrix3 {
-        use crate::common::*;
-        use crate::common::coordinates::{Cartesian2, Cartesian3};
         use crate::common::transforms::Rotation3;
-        use crate::vector::Vector3;
+        use crate::vector;
+        use crate::matrix;
 
         use super::super::Algebra;
         use super::super::Matrix3;
 
         #[test]
         fn arithmetic() {
-            let a = Matrix3::eye() * 2.;
-            let b = Matrix3::ones();
+            let a = matrix::consts::EYE_3 * 2.;
+            let b = matrix::consts::ONES_3;
             let c = a * b;
             assert_eq!(c, b * 2.);
         }
 
         #[test]
         fn determinant() {
-            let a = Matrix3::eye() * 2.;
+            let a = matrix::consts::EYE_3 * 2.;
             assert_eq!(a.determinant(), 8.);
         }
 
@@ -896,13 +898,13 @@ mod tests {
 
         #[test]
         fn inverse() {
-            let a = Matrix3::eye() * 2.;
-            assert_eq!(a.inverse(), Matrix3::eye() * 0.5);
+            let a = matrix::consts::EYE_3 * 2.;
+            assert_eq!(a.inverse(), matrix::consts::EYE_3 * 0.5);
         }
 
         #[test]
         fn adjugate() {
-            let a = Matrix3::eye() * 2.;
+            let a = matrix::consts::EYE_3 * 2.;
             assert_eq!(a.adjugate(), a.inverse() * a.determinant());
         }
 
@@ -913,15 +915,15 @@ mod tests {
             let rot_y = Matrix3::from_rotation_y(angle);
             let rot_z = Matrix3::from_rotation_z(angle);
 
-            let mut axis = Vector3::unit_x();
+            let mut axis = vector::consts::EX_3;
             let mut rot = Matrix3::from_rotation(angle, &axis);
             assert_eq!(rot, rot_x);
 
-            axis = Vector3::unit_y();
+            axis = vector::consts::EY_3;
             rot = Matrix3::from_rotation(angle, &axis);
             assert_eq!(rot, rot_y);
 
-            axis = Vector3::unit_z();
+            axis = vector::consts::EZ_3;
             rot = Matrix3::from_rotation(angle, &axis);
             assert_eq!(rot, rot_z);
         }
@@ -930,25 +932,27 @@ mod tests {
     mod matrix4 {
         use crate::assert_near;
         use crate::common::*;
-        use crate::common::coordinates::{Cartesian2, Homogeneous};
+        use crate::common::coordinates::Homogeneous;
         use crate::common::transforms::{Rigid, Rotation3, Similarity, Translation};
         use crate::matrix::Matrix3;
         use crate::vector::Vector3;
+        use crate::vector;
+        use crate::matrix;
 
         use super::super::Algebra;
         use super::super::Matrix4;
 
         #[test]
         fn arithmetic() {
-            let a = Matrix4::eye() * 2.;
-            let b = Matrix4::ones();
+            let a = matrix::consts::EYE_4 * 2.;
+            let b = matrix::consts::ONES_4;
             let c = a * b;
             assert_eq!(c, b * 2.);
         }
 
         #[test]
         fn determinant() {
-            let a = Matrix4::eye() * 2.;
+            let a = matrix::consts::EYE_4 * 2.;
             assert_eq!(a.determinant(), 16.);
         }
 
@@ -960,19 +964,19 @@ mod tests {
 
         #[test]
         fn inverse() {
-            let a = Matrix4::eye() * 2.;
-            assert_eq!(a.inverse(), Matrix4::eye() * 0.5);
+            let a = matrix::consts::EYE_4 * 2.;
+            assert_eq!(a.inverse(), matrix::consts::EYE_4 * 0.5);
         }
 
         #[test]
         fn adjugate() {
-            let a = Matrix4::eye() * 2.;
+            let a = matrix::consts::EYE_4 * 2.;
             assert_eq!(a.adjugate(), a.inverse() * a.determinant());
         }
 
         #[test]
         fn translations() {
-            let unit_x = Vector3::unit_x();
+            let unit_x = vector::consts::EX_3;
             let a = Matrix4::from_translation(&unit_x);
             let u = unit_x.to_homogeneous();
             let translated = a * u;
@@ -982,7 +986,7 @@ mod tests {
         #[test]
         fn rigid() {
             let angle = std::f64::consts::FRAC_PI_2;
-            let unit_x = Vector3::unit_x();
+            let unit_x = vector::consts::EX_3;
             let rotation_z = Matrix3::from_rotation_z(angle);
             let a = Matrix4::from_rigid(&rotation_z, &unit_x);
             let u = unit_x.to_homogeneous();
@@ -994,7 +998,7 @@ mod tests {
         fn similarity() {
             let angle = std::f64::consts::FRAC_PI_2;
             let scale = 2.;
-            let unit_x = Vector3::unit_x();
+            let unit_x = vector::consts::EX_3;
             let rotation_z = Matrix3::from_rotation_z(angle);
             let a = Matrix4::from_similarity(scale, &rotation_z, &unit_x);
             let u = unit_x.to_homogeneous();

@@ -5,16 +5,33 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use crate::common::*;
 use crate::trajectory;
 use crate::trajectory::Trajectory;
-use crate::vector::*;
+use crate::vector::{self, *};
 
 pub type Point2 = Point<Vector2>;
 pub type Point3 = Point<Vector3>;
+pub type Point4 = Point<Vector4>;
 
-pub const ZERO: Point3 = Point3 {
-    position: Vector3 { x: 0., y: 0., z: 0. },
-    speed: Vector3 { x: 0., y: 0., z: 0. },
-    trajectory: trajectory::ZERO,
-};
+pub mod consts {
+    use crate::vector;
+    use super::*;
+    pub const ZEROS_2: Point2 = Point2 {
+        position: vector::consts::ZEROS_2,
+        speed: vector::consts::ZEROS_2,
+        trajectory: trajectory::consts::ZEROS_2,
+    };
+
+    pub const ZEROS_3: Point3 = Point3 {
+        position: vector::consts::ZEROS_3,
+        speed: vector::consts::ZEROS_3,
+        trajectory: trajectory::consts::ZEROS_3,
+    };
+
+    pub const ZEROS_4: Point4 = Point4 {
+        position: vector::consts::ZEROS_4,
+        speed: vector::consts::ZEROS_4,
+        trajectory: trajectory::consts::ZEROS_4,
+    };
+}
 
 #[derive(Copy, Clone)]
 pub struct Point<T> {
@@ -25,13 +42,13 @@ pub struct Point<T> {
 
 impl From<Vector2> for Point2 {
     fn from(vector: Vector2) -> Self {
-        Point::new(vector, Vector2::zeros())
+        Point::new(vector, vector::consts::ZEROS_2)
     }
 }
 
 impl From<Vector3> for Point3 {
     fn from(vector: Vector3) -> Self {
-        Point::new(vector, Vector3::zeros())
+        Point::new(vector, vector::consts::ZEROS_3)
     }
 }
 
