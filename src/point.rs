@@ -2,7 +2,7 @@ use std::fmt;
 use std::fmt::Debug;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
-use crate::common::*;
+use crate::prelude::*;
 use crate::trajectory;
 use crate::trajectory::Trajectory;
 use crate::vector::{self, *};

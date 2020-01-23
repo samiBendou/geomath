@@ -9,8 +9,8 @@ use std::ops::{
     Rem, Sub,
     SubAssign,
 };
-use crate::common::*;
-use crate::common::coordinates::Polar;
+use crate::prelude::*;
+use crate::prelude::coordinates::Polar;
 use crate::matrix::{Matrix2, Matrix3, Matrix4};
 use crate::point::Point2;
 use crate::{impl_vector, impl_debug_vector};
@@ -41,7 +41,7 @@ pub mod consts {
     pub const EZ_4: Vector4 = Vector4 { x: 0., y: 0., z: 1., w: 0. };
     pub const N_EZ_4: Vector4 = Vector4 { x: 0., y: 0., z: -1., w: 0. };
     pub const EW_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: 1. };
-    pub const N_EW_4: Vector4 = Vector4 { x: 0., y: 0., z: -0., w: -1. };
+    pub const N_EW_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: -1. };
     pub const ZEROS_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: 0. };
     pub const ONES_4: Vector4 = Vector4 { x: 1., y: 1., z: 1., w: 1. };
 }
@@ -561,10 +561,10 @@ impl Split<Vector3> for Vector6 {
 mod tests {
     mod vector3 {
         use crate::assert_near;
-        use crate::common::*;
-        use crate::common::transforms::Rotation3;
+        use crate::prelude::*;
+        use crate::prelude::transforms::Rotation3;
         use crate::vector;
-        use crate::common::coordinates::*;
+        use crate::prelude::coordinates::*;
         use crate::vector::vec3;
 
         #[test]

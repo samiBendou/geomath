@@ -10,8 +10,8 @@ use std::ops::{
     SubAssign,
 };
 
-use crate::common::*;
-use crate::common::transforms;
+use crate::prelude::*;
+use crate::prelude::transforms;
 use crate::vector::*;
 use crate::{impl_vector, impl_debug_matrix};
 
@@ -869,7 +869,7 @@ impl transforms::Rotation3 for Matrix3 {
 #[cfg(test)]
 mod tests {
     mod matrix3 {
-        use crate::common::transforms::Rotation3;
+        use crate::prelude::transforms::Rotation3;
         use crate::vector::{self};
         use crate::matrix::{self, *};
 
@@ -928,9 +928,9 @@ mod tests {
 
     mod matrix4 {
         use crate::assert_near;
-        use crate::common::*;
-        use crate::common::coordinates::Homogeneous;
-        use crate::common::transforms::{Rigid, Rotation3, Similarity, Translation};
+        use crate::prelude::*;
+        use crate::prelude::coordinates::Homogeneous;
+        use crate::prelude::transforms::{Rigid, Rotation3, Similarity, Translation};
         use crate::matrix::{self, *};
         use crate::vector::{self, *};
 

@@ -131,7 +131,7 @@ pub mod coordinates {
 }
 
 pub mod transforms {
-    use crate::common::Initializer;
+    use crate::prelude::Initializer;
     use crate::vector::Vector3;
 
     pub trait Translation<T> where
