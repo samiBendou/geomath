@@ -96,8 +96,8 @@
 //! use geomath::prelude::*;
 //! let u = vector::consts::EX_3;
 //! let v = vector::consts::N_EZ_3;
-//! assert_eq!(u % v, u.distance(v));
-//! assert_eq!(u | v, u.dot(v));
+//! assert_eq!(u % v, u.distance(&v));
+//! assert_eq!(u | v, u.dot(&v));
 //! assert_eq!(!u, u.magnitude());
 //! ```
 
