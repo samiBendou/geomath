@@ -9,6 +9,7 @@ categories = ["science"]
 description = "Stack-allocated maths for geometry, simulation and computer graphics"
 keywords = ["math", "vector", "matrix", "trajectory", "point"]
 license-file = "LICENSE"
+readme = "README.md"
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
