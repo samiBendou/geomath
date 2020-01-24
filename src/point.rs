@@ -1,3 +1,26 @@
+//!
+//! A point encapsulates position, speed and trajectory.
+//!
+//! It can be seen as a moving point where we store both the kinematic state of the point
+//! and it's trajectory.
+//!
+//! ## Purpose
+//! The main goal of the abstraction is to provide a handler for solving ODE of second order
+//! such as the 2nd law of Newton.
+//! It also provide some affine geometry features.
+//!
+//! ## Conventions
+//! * The trajectory needs to be updated by the calling code
+//! * A vector 2N is seen as an upper part containing the position and a lower part containing a speed
+//! * Operations between points changes only position and speed
+//! * Operations between points of size N and vectors of size N changes only position
+//! * Operations between points of size N and vectors of size 2N changes position and speed
+//! * Metric space operations between points are perform between their positions
+//! * Equality between points checks at both positions and speed
+//!
+//! **Note :** The trajectory is never updated, you have to call `update_trajectory` method to
+//! add the current position value to the trajectory.
+//!
 use std::fmt;
 use std::fmt::Debug;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
@@ -7,25 +30,33 @@ use crate::trajectory;
 use crate::trajectory::Trajectory;
 use crate::vector::{self, *};
 
+/// 2D point
 pub type Point2 = Point<Vector2>;
+/// 3D point
 pub type Point3 = Point<Vector3>;
+/// 4D point
 pub type Point4 = Point<Vector4>;
 
+/// constant points
 pub mod consts {
     use crate::vector;
     use super::*;
+
+    /// 2D zero point
     pub const ZEROS_2: Point2 = Point2 {
         position: vector::consts::ZEROS_2,
         speed: vector::consts::ZEROS_2,
         trajectory: trajectory::consts::ZEROS_2,
     };
 
+    /// 3D zero point
     pub const ZEROS_3: Point3 = Point3 {
         position: vector::consts::ZEROS_3,
         speed: vector::consts::ZEROS_3,
         trajectory: trajectory::consts::ZEROS_3,
     };
 
+    /// 4D zero point
     pub const ZEROS_4: Point4 = Point4 {
         position: vector::consts::ZEROS_4,
         speed: vector::consts::ZEROS_4,
@@ -33,6 +64,7 @@ pub mod consts {
     };
 }
 
+/// Generic structure and documentation for points
 #[derive(Copy, Clone)]
 pub struct Point<T> {
     pub position: T,
@@ -66,6 +98,7 @@ impl From<Vector6> for Point3 {
 
 impl<T> Point<T> where
     T: Copy + Clone + AddAssign<T> + SubAssign<T> {
+    /// Construct a point with given position and speed vectors
     //noinspection RsTypeCheck
     #[inline]
     pub fn new(position: T, speed: T) -> Point<T> {
@@ -76,12 +109,18 @@ impl<T> Point<T> where
         }
     }
 
+    /// Updates trajectory
+    ///
+    /// The value of `position` is pushed into the trajectory.
     #[inline]
     pub fn update_trajectory(&mut self) -> &mut Self {
         self.trajectory.push(&self.position);
         self
     }
 
+    /// Change the origin
+    ///
+    /// This method also changes the origin of the trajectory.
     #[inline]
     pub fn reset_origin(&mut self, origin: &Self, old_origin: &Self) -> &mut Self {
         self.position += old_origin.position;
