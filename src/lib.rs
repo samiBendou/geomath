@@ -57,8 +57,8 @@
 //! As said above, the prelude contains the traits specifications, it is split in a root and 2 modules :
 //! ```
 //! use geomath::prelude::*; // most of the traits
-//! use geomath::prelude::coordinates; // coordinates systems and transformations
-//! use geomath::prelude::transforms; // matrix transforms (translations, rotations, ...)
+//! use geomath::prelude::coordinates::*; // coordinates systems and transformations
+//! use geomath::prelude::transforms::*; // matrix transforms (translations, rotations, ...)
 //! ```
 //!
 //! ## Constants
