@@ -1,5 +1,5 @@
 //!
-//! A vector is represented as a struct containing a `f64` field for each cartesian component
+//! A vector is represented as a struct containing a `f64` field for each cartesian component.
 //!
 
 use std::fmt::{Debug, Error, Formatter};
@@ -10,7 +10,7 @@ use crate::matrix::{Matrix2, Matrix3, Matrix4};
 use crate::point::Point2;
 use crate::{impl_vector, impl_debug_vector};
 
-/// vector constants
+/// constant vectors
 pub mod consts {
     use super::*;
 

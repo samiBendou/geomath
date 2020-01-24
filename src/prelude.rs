@@ -150,6 +150,61 @@ pub trait Interpolation {
     fn set_berp(&mut self, other: &Self, other1: &Self, other2: &Self, s: f64) -> &mut Self;
 }
 
+/// Access the matrix as an array of rows ordered from left to right
+pub trait Rows<T> where
+    Self: std::marker::Sized + Initializer {
+    /// Get a matrix from rows array
+    fn from_rows(rows: &T) -> Self {
+        let mut ret = Self::zeros();
+        ret.set_rows(rows);
+        ret
+    }
+    /// Get the rows of a matrix
+    fn rows(&self) -> T;
+
+    /// Set the rows of a matrix
+    fn set_rows(&mut self, rows: &T) -> &mut Self;
+}
+
+/// Square matrices algebra
+pub trait Algebra<T> where
+    Self: std::marker::Sized + Copy + Clone,
+    T: std::marker::Sized + Copy + Clone {
+
+    /// Get the determinant of the matrix
+    fn determinant(&self) -> f64;
+
+    /// Get the inverse matrix
+    fn inverse(&self) -> Self {
+        let mut ret = *self;
+        ret.set_inverse();
+        ret
+    }
+
+    /// Get the transposed matrix
+    fn transposed(&self) -> Self {
+        let mut ret = *self;
+        ret.set_transposed();
+        ret
+    }
+
+    /// Get the adjugate matrix
+    fn adjugate(&self) -> Self {
+        let mut ret = *self;
+        ret.set_adjugate();
+        ret
+    }
+
+    /// Set inverse matrix
+    fn set_inverse(&mut self) -> &mut Self;
+
+    /// Set transposed matrix
+    fn set_transposed(&mut self) -> &mut Self;
+
+    /// Set adjugate matrix
+    fn set_adjugate(&mut self) -> &mut Self;
+}
+
 /// Coordinates accessors
 ///
 /// Get and Set coordinates of 2D and 3D vectors.

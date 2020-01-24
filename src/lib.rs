@@ -4,9 +4,9 @@
 //!
 //! * Linear algebra
 //! * Computational Geometry
+//! * Computer Graphics and Vision
 //! * Physics and Kinematics simulation
 //! * Numerical simulation
-//! * Computer Graphics and Vision
 //!
 //! It relies on a vast API that consists on various traits each specifying a math property.
 //! It provides most of the common abstraction used in the above domains :
@@ -33,6 +33,11 @@
 //! * Vectors cartesian coordinates are accessible using `vector.i` syntax with `i` the name of the coordinate
 //! * Matrices components can be accessed using `matrix.ij` where `i` is the row index and `j` the column index
 //! * Rows and columns are indexed with `x`, `y`, `z`, ... starting with `x`
+//! * Vectors of size N can be left multiplied by matrices of size N+1
+//!
+//! **Note :** When left-multiplying a vector of size N with a matrix of size N+1 the vector is seen as an homogeneous
+//! vector (ie. vector of size N) with added component at 1.
+//! It's a way to perfrom efficient multiplications with transformation matrices.
 //!
 //! ### Example
 //! ```
