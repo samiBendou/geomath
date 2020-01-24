@@ -8,7 +8,7 @@ authors = ["bendou <sami@dahoux.net>"]
 categories = ["science"]
 description = "Stack-allocated maths for geometry, simulation and computer graphics"
 keywords = ["math", "vector", "matrix", "trajectory", "point"]
-license = "BSD 3-Clause License"
+license = "	BSD-3-Clause"
 readme = "README.md"
 edition = "2018"
 
