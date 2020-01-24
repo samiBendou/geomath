@@ -1,6 +1,6 @@
 [package]
 name = "geomath"
-version = "0.2.0"
+version = "0.2.1"
 repository = "https://github.com/samiBendou/geomath/"
 homepage = "https://github.com/samiBendou/geomath/"
 documentation = "https://docs.rs/geomath/0.2.0/geomath"
