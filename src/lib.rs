@@ -31,7 +31,7 @@
 //! Some simple conventions have been choosed either to gain clarity or performance :
 //! * Vectors are columns matrices when operating with a matrix
 //! * Vectors cartesian coordinates are accessible using `vector.i` syntax with `i` the name of the coordinate
-//! * Matrices values can be accessed using `matrix.ij` where `i` is the row index and `j` the column index
+//! * Matrices components can be accessed using `matrix.ij` where `i` is the row index and `j` the column index
 //! * Rows and columns are indexed with `x`, `y`, `z`, ... starting with `x`
 //!
 //! ### Example
