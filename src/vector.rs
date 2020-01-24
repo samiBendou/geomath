@@ -1,57 +1,81 @@
+//!
+//! A vector is represented as a struct containing a `f64` field for each cartesian component
+//!
+
 use std::fmt::{Debug, Error, Formatter};
-use std::ops::{
-    Add, AddAssign,
-    BitOr, Div,
-    DivAssign,
-    Mul,
-    MulAssign,
-    Neg, Not,
-    Rem, Sub,
-    SubAssign,
-};
+use std::ops::*;
 use crate::prelude::*;
-use crate::prelude::coordinates::Polar;
+use crate::prelude::coordinates::*;
 use crate::matrix::{Matrix2, Matrix3, Matrix4};
 use crate::point::Point2;
 use crate::{impl_vector, impl_debug_vector};
 
+/// vector constants
 pub mod consts {
     use super::*;
 
+    /// 2D positive unit x vector (1, 0)
     pub const EX_2: Vector2 = Vector2 { x: 1., y: 0. };
+    /// 2D negative unit x vector (-1, 0)
     pub const N_EX_2: Vector2 = Vector2 { x: -1., y: 0. };
+    /// 2D positive unit y vector (0, 1)
     pub const EY_2: Vector2 = Vector2 { x: 0., y: 1. };
+    /// 2D negative unit y vector (0, -1)
     pub const N_EY_2: Vector2 = Vector2 { x: 0., y: -1. };
+    /// 2D zero vector (0, 0)
     pub const ZEROS_2: Vector2 = Vector2 { x: 0., y: 0. };
+    /// 2D one vector (1, 1)
     pub const ONES_2: Vector2 = Vector2 { x: 1., y: 1. };
 
+
+    /// 3D positive unit x vector (1, 0, 0)
     pub const EX_3: Vector3 = Vector3 { x: 1., y: 0., z: 0. };
+    /// 3D negative unit x vector (-1, 0, 0)
     pub const N_EX_3: Vector3 = Vector3 { x: -1., y: 0., z: 0. };
+    /// 3D positive unit y vector (0, 1, 0)
     pub const EY_3: Vector3 = Vector3 { x: 0., y: 1., z: 0. };
+    /// 3D negative unit y vector (0, -1, 0)
     pub const N_EY_3: Vector3 = Vector3 { x: 0., y: -1., z: 0. };
+    /// 3D positive unit z vector (0, 0, 1)
     pub const EZ_3: Vector3 = Vector3 { x: 0., y: 0., z: 1. };
+    /// 3D negative unit z vector (0, 0, -1)
     pub const N_EZ_3: Vector3 = Vector3 { x: 0., y: 0., z: -1. };
+    /// 3D zero vector (0, 0, 0)
     pub const ZEROS_3: Vector3 = Vector3 { x: 0., y: 0., z: 0. };
+    /// 3D one vector (1, 1, 1)
     pub const ONES_3: Vector3 = Vector3 { x: 1., y: 1., z: 1. };
 
+
+    /// 3D positive unit x vector (1, 0, 0, 0)
     pub const EX_4: Vector4 = Vector4 { x: 1., y: 0., z: 0., w: 0. };
+    /// 4D negative unit x vector (-1, 0, 0, 0)
     pub const N_EX_4: Vector4 = Vector4 { x: -1., y: 0., z: 0., w: 0. };
+    /// 4D positive unit y vector (0, 1, 0, 0)
     pub const EY_4: Vector4 = Vector4 { x: 0., y: 1., z: 0., w: 0. };
+    /// 4D negative unit y vector (0, -1, 0, 0)
     pub const N_EY_4: Vector4 = Vector4 { x: 0., y: -1., z: 0., w: 0. };
+    /// 4D positive unit z vector (0, 0, 1, 0)
     pub const EZ_4: Vector4 = Vector4 { x: 0., y: 0., z: 1., w: 0. };
+    /// 4D negative unit z vector (0, 0, -1, 0)
     pub const N_EZ_4: Vector4 = Vector4 { x: 0., y: 0., z: -1., w: 0. };
+    /// 4D positive unit w vector (0, 0, 0, 1)
     pub const EW_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: 1. };
+    /// 4D negative unit w vector (0, 0, 0, -1)
     pub const N_EW_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: -1. };
+    /// 4D zero vector (0, 0, 0, 0)
     pub const ZEROS_4: Vector4 = Vector4 { x: 0., y: 0., z: 0., w: 0. };
+    /// 4D one vector (1, 1, 1, 1)
     pub const ONES_4: Vector4 = Vector4 { x: 1., y: 1., z: 1., w: 1. };
 }
 
+/// 2D vectors (x, y)
 #[derive(Copy, Clone)]
 pub struct Vector2 {
     pub x: f64,
     pub y: f64,
 }
 
+/// 3D vectors (x, y, z)
 #[derive(Copy, Clone)]
 pub struct Vector3 {
     pub x: f64,
@@ -59,6 +83,7 @@ pub struct Vector3 {
     pub z: f64,
 }
 
+/// 4D vectors (x, y, z, w)
 #[derive(Copy, Clone)]
 pub struct Vector4 {
     pub x: f64,
@@ -67,6 +92,7 @@ pub struct Vector4 {
     pub w: f64,
 }
 
+/// 6D vectors (x, y, z, u, v, w)
 #[derive(Copy, Clone)]
 pub struct Vector6 {
     pub x: f64,
