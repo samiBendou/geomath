@@ -3,10 +3,10 @@
 //! following domains:
 //!
 //! * Linear algebra
-//! * Computational geometry
-//! * Physics and kinematics simulation
-//! * 2D, 3D, 4D Numerical simulation
-//! * Computer graphics and vision
+//! * Computational Geometry
+//! * Physics and Kinematics simulation
+//! * Numerical simulation
+//! * Computer Graphics and Vision
 //!
 //! It relies on a vast API that consists on various traits each specifying a math property.
 //! It provides most of the common abstraction used in the above domains :
@@ -87,10 +87,10 @@
 //! ## Metric space features
 //! The metric space fetuares for vectors and matrices can be either computed using methods or operators :
 //! ```
-//! use geomath::vector::{*, self};
+//! use geomath::vector;
 //! use geomath::prelude::*;
-//! let u = vector::consts::EX_3; // unit vector in the positive x (1, 0, 0)
-//! let v = vector::consts::N_EZ_3; // unit vector in the negative z direction (0, 0, -1)
+//! let u = vector::consts::EX_3;
+//! let v = vector::consts::N_EZ_3;
 //! assert_eq!(u % v, u.distance(v));
 //! assert_eq!(u | v, u.dot(v));
 //! assert_eq!(!u, u.magnitude());
