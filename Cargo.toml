@@ -1,7 +1,14 @@
 [package]
 name = "geomath"
-version = "0.1.0"
-authors = ["bendou <sami.dahoux@etu.emse.fr>"]
+version = "0.2.0"
+repository = "https://github.com/samiBendou/geomath/"
+homepage = "https://github.com/samiBendou/geomath/"
+documentation = "https://docs.rs/geomath/0.2.0/geomath"
+authors = ["bendou <sami@dahoux.net>"]
+categories = ["science"]
+description = "Stack-allocated maths for geometry, simulation and computer graphics"
+keywords = ["linear", "algebra", "computer", "graphics", "math", "vector", "matrix", "simulation", "physics", "geometry", "trajectory", "point"]
+license-file = "LICENSE"
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
