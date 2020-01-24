@@ -904,7 +904,7 @@ mod tests {
         use crate::prelude::coordinates::Homogeneous;
         use crate::prelude::transforms::{Rigid, Rotation3, Similarity, Translation};
         use crate::matrix::{self, *};
-        use crate::vector;
+        use crate::vector::{self, Vector3};
 
         #[test]
         fn arithmetic() {
