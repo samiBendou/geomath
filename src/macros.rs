@@ -1,3 +1,4 @@
+/// Similar to `assert_eq` but with a tolerance interval
 #[macro_export]
 macro_rules! assert_near {
     ($val: expr, $exp: expr, $tol: expr) => {
@@ -9,6 +10,7 @@ macro_rules! assert_near {
     }
 }
 
+/// Implementation of basic vector space features
 #[macro_export]
 macro_rules! impl_vector {
     ($VectorN:ident { $($field:ident),+ }, $n: expr, $label: ident) => {
@@ -255,6 +257,7 @@ macro_rules! impl_vector {
     }
 }
 
+/// Vector debug trait
 #[macro_export]
 macro_rules! impl_debug_vector {
 ($VectorN:ident { $($field:ident),+ }) => {
@@ -273,6 +276,7 @@ macro_rules! impl_debug_vector {
     }
 }
 
+/// Matrix debug trait
 #[macro_export]
 macro_rules! impl_debug_matrix {
 ($MatrixN:ident) => {
