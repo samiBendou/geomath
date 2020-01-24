@@ -1,71 +1,41 @@
-use std::fmt::{Debug, Error, Formatter};
-use std::ops::{
-    Add, AddAssign,
-    BitOr, Div,
-    DivAssign,
-    Mul,
-    MulAssign,
-    Neg, Not,
-    Rem, Sub,
-    SubAssign,
-};
+//!
+//! A matrix is represented as a struct containing a `f64` field for each component.
+//!
 
+use std::fmt::{Debug, Error, Formatter};
+use std::ops::*;
 use crate::prelude::*;
-use crate::prelude::transforms;
 use crate::vector::*;
+use crate::prelude::transforms;
 use crate::{impl_vector, impl_debug_matrix};
 
-pub trait Rows<T> where
-    Self: std::marker::Sized + Initializer {
-    fn from_rows(rows: &T) -> Self {
-        let mut ret = Self::zeros();
-        ret.set_rows(rows);
-        ret
-    }
-    fn rows(&self) -> T;
-    fn set_rows(&mut self, rows: &T) -> &mut Self;
-}
-
-pub trait Algebra<T> where
-    Self: std::marker::Sized + Copy + Clone,
-    T: std::marker::Sized + Copy + Clone {
-    fn determinant(&self) -> f64;
-    fn inverse(&self) -> Self {
-        let mut ret = *self;
-        ret.set_inverse();
-        ret
-    }
-    fn transposed(&self) -> Self {
-        let mut ret = *self;
-        ret.set_transposed();
-        ret
-    }
-    fn adjugate(&self) -> Self {
-        let mut ret = *self;
-        ret.set_adjugate();
-        ret
-    }
-    fn set_inverse(&mut self) -> &mut Self;
-    fn set_transposed(&mut self) -> &mut Self;
-    fn set_adjugate(&mut self) -> &mut Self;
-}
-
+/// constant matrices
 pub mod consts {
     use super::*;
 
+    /// 2x2 zero matrix
     pub const ZEROS_2: Matrix2 = Matrix2 {xx: 0., xy: 0., yx: 0., yy: 0.};
+    /// 2x2 one matrix
     pub const ONES_2: Matrix2 = Matrix2 {xx: 1., xy: 1., yx: 1., yy: 1.};
+    /// 2x2 identity matrix
     pub const EYE_2: Matrix2 = Matrix2 {xx: 1., xy: 0., yx: 0., yy: 1.};
 
+    /// 3x3 zero matrix
     pub const ZEROS_3: Matrix3 = Matrix3 {xx: 0., xy: 0., xz: 0., yx: 0., yy: 0., yz: 0., zx: 0., zy: 0., zz: 0.};
+    /// 3x3 one matrix
     pub const ONES_3: Matrix3 = Matrix3 {xx: 1., xy: 1., xz: 1., yx: 1., yy: 1., yz: 0., zx: 1., zy: 1., zz: 1.};
+    /// 3x3 identity matrix
     pub const EYE_3: Matrix3 = Matrix3 {xx: 1., xy: 0., xz: 0., yx: 0., yy: 1., yz: 0., zx: 0., zy: 0., zz: 1.};
 
+    /// 4x4 zero matrix
     pub const ZEROS_4: Matrix4 = Matrix4 {xx: 0., xy: 0., xz: 0., xw: 0., yx: 0., yy: 0., yz: 0., yw: 0., zx: 0., zy: 0., zz: 0., zw: 0., wx: 0., wy: 0., wz: 0., ww: 0.};
+    /// 4x4 one matrix
     pub const ONES_4: Matrix4 = Matrix4 {xx: 1., xy: 1., xz: 1., xw: 1., yx: 1., yy: 1., yz: 1., yw: 1., zx: 1., zy: 1., zz: 1., zw: 1., wx: 1., wy: 1., wz: 1., ww: 1.};
+    /// 4x4 identity matrix
     pub const EYE_4: Matrix4 = Matrix4 {xx: 1., xy: 0., xz: 0., xw: 0., yx: 0., yy: 1., yz: 0., yw: 0., zx: 0., zy: 0., zz: 1., zw: 0., wx: 0., wy: 0., wz: 0., ww: 1.};
 }
 
+/// 2x2 matrix
 #[derive(Copy, Clone)]
 pub struct Matrix2 {
     pub xx: f64,
@@ -74,6 +44,7 @@ pub struct Matrix2 {
     pub yy: f64,
 }
 
+/// 3x3 matrix
 #[derive(Copy, Clone)]
 pub struct Matrix3 {
     pub xx: f64,
@@ -87,6 +58,7 @@ pub struct Matrix3 {
     pub zz: f64,
 }
 
+/// 4x4 matrix
 #[derive(Copy, Clone)]
 pub struct Matrix4 {
     pub xx: f64,
