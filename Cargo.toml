@@ -7,7 +7,7 @@ documentation = "https://docs.rs/geomath/0.2.0/geomath"
 authors = ["bendou <sami@dahoux.net>"]
 categories = ["science"]
 description = "Stack-allocated maths for geometry, simulation and computer graphics"
-keywords = ["linear", "algebra", "computer", "graphics", "math", "vector", "matrix", "simulation", "physics", "geometry", "trajectory", "point"]
+keywords = ["math", "vector", "matrix", "trajectory", "point"]
 license-file = "LICENSE"
 edition = "2018"
 
