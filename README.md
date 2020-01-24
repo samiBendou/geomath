@@ -1,4 +1,8 @@
+
 # geomath
+[![crates](https://img.shields.io/crates/v/geomath?style=flat-square)](https://crates.io/crates/geomath)
+[![crates](https://img.shields.io/crates/l/geomath?style=flat-square)](https://github.com/samiBendou/geomath/blob/master/LICENSE)
+
 ### A framework for simulation and computer graphics
 
 ## Brief
