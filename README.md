@@ -1,5 +1,6 @@
 
 # geomath
+[![build](https://img.shields.io/travis/samiBendou/geomath?style=flat-square)](https://travis-ci.org/samiBendou/geomath)
 [![crates](https://img.shields.io/crates/v/geomath?style=flat-square)](https://crates.io/crates/geomath)
 [![documentation](https://img.shields.io/static/v1?label=docs.rs&message=documentation&color=blue&style=flat-square)](https://docs.rs/geomath)
 [![license](https://img.shields.io/crates/l/geomath?style=flat-square)](https://github.com/samiBendou/geomath/blob/master/LICENSE)
