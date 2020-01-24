@@ -14,25 +14,25 @@ pub mod consts {
     use super::*;
 
     /// 2x2 zero matrix
-    pub const ZEROS_2: Matrix2 = Matrix2 {xx: 0., xy: 0., yx: 0., yy: 0.};
+    pub const ZEROS_2: Matrix2 = Matrix2 { xx: 0., xy: 0., yx: 0., yy: 0. };
     /// 2x2 one matrix
-    pub const ONES_2: Matrix2 = Matrix2 {xx: 1., xy: 1., yx: 1., yy: 1.};
+    pub const ONES_2: Matrix2 = Matrix2 { xx: 1., xy: 1., yx: 1., yy: 1. };
     /// 2x2 identity matrix
-    pub const EYE_2: Matrix2 = Matrix2 {xx: 1., xy: 0., yx: 0., yy: 1.};
+    pub const EYE_2: Matrix2 = Matrix2 { xx: 1., xy: 0., yx: 0., yy: 1. };
 
     /// 3x3 zero matrix
-    pub const ZEROS_3: Matrix3 = Matrix3 {xx: 0., xy: 0., xz: 0., yx: 0., yy: 0., yz: 0., zx: 0., zy: 0., zz: 0.};
+    pub const ZEROS_3: Matrix3 = Matrix3 { xx: 0., xy: 0., xz: 0., yx: 0., yy: 0., yz: 0., zx: 0., zy: 0., zz: 0. };
     /// 3x3 one matrix
-    pub const ONES_3: Matrix3 = Matrix3 {xx: 1., xy: 1., xz: 1., yx: 1., yy: 1., yz: 0., zx: 1., zy: 1., zz: 1.};
+    pub const ONES_3: Matrix3 = Matrix3 { xx: 1., xy: 1., xz: 1., yx: 1., yy: 1., yz: 0., zx: 1., zy: 1., zz: 1. };
     /// 3x3 identity matrix
-    pub const EYE_3: Matrix3 = Matrix3 {xx: 1., xy: 0., xz: 0., yx: 0., yy: 1., yz: 0., zx: 0., zy: 0., zz: 1.};
+    pub const EYE_3: Matrix3 = Matrix3 { xx: 1., xy: 0., xz: 0., yx: 0., yy: 1., yz: 0., zx: 0., zy: 0., zz: 1. };
 
     /// 4x4 zero matrix
-    pub const ZEROS_4: Matrix4 = Matrix4 {xx: 0., xy: 0., xz: 0., xw: 0., yx: 0., yy: 0., yz: 0., yw: 0., zx: 0., zy: 0., zz: 0., zw: 0., wx: 0., wy: 0., wz: 0., ww: 0.};
+    pub const ZEROS_4: Matrix4 = Matrix4 { xx: 0., xy: 0., xz: 0., xw: 0., yx: 0., yy: 0., yz: 0., yw: 0., zx: 0., zy: 0., zz: 0., zw: 0., wx: 0., wy: 0., wz: 0., ww: 0. };
     /// 4x4 one matrix
-    pub const ONES_4: Matrix4 = Matrix4 {xx: 1., xy: 1., xz: 1., xw: 1., yx: 1., yy: 1., yz: 1., yw: 1., zx: 1., zy: 1., zz: 1., zw: 1., wx: 1., wy: 1., wz: 1., ww: 1.};
+    pub const ONES_4: Matrix4 = Matrix4 { xx: 1., xy: 1., xz: 1., xw: 1., yx: 1., yy: 1., yz: 1., yw: 1., zx: 1., zy: 1., zz: 1., zw: 1., wx: 1., wy: 1., wz: 1., ww: 1. };
     /// 4x4 identity matrix
-    pub const EYE_4: Matrix4 = Matrix4 {xx: 1., xy: 0., xz: 0., xw: 0., yx: 0., yy: 1., yz: 0., yw: 0., zx: 0., zy: 0., zz: 1., zw: 0., wx: 0., wy: 0., wz: 0., ww: 1.};
+    pub const EYE_4: Matrix4 = Matrix4 { xx: 1., xy: 0., xz: 0., xw: 0., yx: 0., yy: 1., yz: 0., yw: 0., zx: 0., zy: 0., zz: 1., zw: 0., wx: 0., wy: 0., wz: 0., ww: 1. };
 }
 
 /// 2x2 matrix
