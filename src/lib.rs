@@ -1,5 +1,5 @@
 //!
-//! geomath is a general purpose maths framework that aims to provide efficient tools for the
+//! geomath is a general purpose maths framework that aims to provide efficient real-time tools for the
 //! following domains:
 //!
 //! * Linear algebra
