@@ -63,7 +63,7 @@ pub trait Split<T> {
 ///
 /// **Note :** For matrices and vectors you can also use operators : `%` for distance, `|` for dot product, `!` for magnitude
 pub trait Metric where
-Self: Copy {
+    Self: Copy {
     /// Dot product of the two objects
     fn dot(&self, other: &Self) -> f64;
     /// Squared distance between the two objects
@@ -83,11 +83,12 @@ Self: Copy {
     /// Normalizes the vector, ie. sets magnitude to 1 without changing direction
     fn set_normalized(&mut self) -> &mut Self;
 }
+
 /// Operations related to the angle of two vectors
 ///
 /// Do not use theses features with zero vector since divisions with the magnitude are performed.
 pub trait Angle where
-Self: Metric {
+    Self: Metric {
     /// Cosine of the angle between the two vectors, non-oriented
     fn cos(&self, rhs: &Self) -> f64 {
         self.dot(rhs) / (self.magnitude() * rhs.magnitude())
@@ -106,7 +107,7 @@ Self: Metric {
 
 /// Stable cross product of two vectors
 pub trait Cross where
-Self: Copy + Clone {
+    Self: Copy + Clone {
     /// Get the cross product between two vectors
     fn cross(&self, rhs: &Self) -> Self {
         let mut ret = *self;
@@ -170,7 +171,6 @@ pub trait Rows<T> where
 pub trait Algebra<T> where
     Self: std::marker::Sized + Copy + Clone,
     T: std::marker::Sized + Copy + Clone {
-
     /// Get the determinant of the matrix
     fn determinant(&self) -> f64;
 
@@ -239,7 +239,6 @@ pub trait Algebra<T> where
 /// ![coordinates](https://github.com/samiBendou/geomath/raw/dev/media/local_%20basis_diagram.png)
 ///
 pub mod coordinates {
-
     /// Polar coordinates accessors
     pub trait Polar {
         /// Get a vector from polar coordinates
@@ -364,7 +363,6 @@ pub mod transforms {
     /// 2D rotations matrix
     pub trait Rotation2 where
         Self: std::marker::Sized + Copy + Clone + Initializer {
-
         /// Get a rotation matrix from angle
         fn from_rotation(angle: f64) -> Self {
             let mut ret = Self::zeros();
@@ -379,7 +377,6 @@ pub mod transforms {
     /// 3D rotations matrix
     pub trait Rotation3 where
         Self: std::marker::Sized + Copy + Clone + Initializer {
-
         /// Get a rotation matrix from axis and angle
         fn from_rotation(angle: f64, axis: &Vector3) -> Self {
             let mut ret = Self::zeros();
