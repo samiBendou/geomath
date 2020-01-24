@@ -62,7 +62,7 @@
 //! ```
 //!
 //! ## Constants
-//! Insthead of providing static generators for unit vectors and identity matrices, these
+//! Instead of providing static generators for unit vectors and identity matrices, these
 //! are hard coded as constants :
 //! ```
 //! use geomath::vector;
