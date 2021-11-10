@@ -424,8 +424,8 @@ impl Algebra<Matrix3> for Matrix3 {
         self.xy = dyy * det;
         self.yy = (zz * xx - zx * xz) * det;
         self.zy = (-zy * xx + zx * xy) * det;
-        self.zx = dyz * det;
-        self.zy = (-yz * xx + yx * xz) * det;
+        self.xz = dyz * det;
+        self.yz = (-yz * xx + yx * xz) * det;
         self.zz = (yy * xx - yx * xy) * det;
 
         self
@@ -842,6 +842,7 @@ impl transforms::Rotation3 for Matrix3 {
 mod tests {
     mod matrix3 {
         use crate::prelude::transforms::Rotation3;
+        use crate::prelude::transforms::Translation;
         use crate::vector::{self};
         use crate::matrix::{self, *};
 
@@ -867,8 +868,8 @@ mod tests {
 
         #[test]
         fn inverse() {
-            let a = matrix::consts::EYE_3 * 2.;
-            assert_eq!(a.inverse(), matrix::consts::EYE_3 * 0.5);
+            let a = matrix::Matrix3::from_translation(&vector::vec2(1.0, 2.0));
+            assert_eq!(a.inverse(), matrix::Matrix3::from_translation(&vector::vec2(-1.0, -2.0)));
         }
 
         #[test]
